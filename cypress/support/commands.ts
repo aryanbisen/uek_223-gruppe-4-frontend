@@ -1,4 +1,4 @@
-/// <reference types="cypress" />
+// / <reference types="cypress" />
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
@@ -9,22 +9,28 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 //
-//
-// -- This is a parent command --
+
+// YOU CAN ADD YOUR CUSTOM CYPRESS FUNCTIONS HERE
+
+
+// // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })
 //
 //
-// -- This is a child command --
+// // -- This is a child command --
 // Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
 //
 //
-// -- This is a dual command --
+// // -- This is a dual command --
 // Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
 //
 //
-// -- This will overwrite an existing command --
+// // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-//
+
+
+// IF YOU ADD CUSTOM COMMANDS ABOVE, UNCOMMENT THIS DECLARATION AND ADD tYPE DEFINITION FOR YOUR FUNCTION
+
 // declare global {
 //   namespace Cypress {
 //     interface Chainable {
@@ -35,3 +41,5 @@
 //     }
 //   }
 // }
+
+export {};

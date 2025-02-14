@@ -20,6 +20,7 @@
     "array-move": "^2.2.1",
     "axios": "^0.21.1",
     "babel-loader": "^8.1.0",
+    "caniuse-lite": "1.0.30001632",
     "classnames": "^2.2.6",
     "clsx": "^1.1.1",
     "create-react-app": "^3.4.1",
@@ -83,5 +84,9 @@
     "fallback": {
       "crypto": "require.resolve('crypto-js')"
     }
-  }
+  },
+  "resolutions": {
+    "caniuse-lite": "1.0.30001632"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
