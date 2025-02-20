@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AppBar, Toolbar, Typography, Button, Avatar, Box, Card, CardContent, CardMedia, IconButton } from '@mui/material';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
-import logo from '../../logo1.png';
+import logo from '../../ourspacelogo.png';
 
 const events = [
     { id: 1, name: 'Music Festival', image: 'https://source.unsplash.com/800x500/?concert' },
