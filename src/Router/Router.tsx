@@ -2,6 +2,8 @@ import { Route, Routes } from 'react-router-dom';
 import LoginPage from '../components/pages/LoginPage/LoginPage';
 import PrivateRoute from './PrivateRoute';
 import HomePage from '../components/pages/HomePage';
+import HomePageLoggedIn from '../components/pages/HomePageLoggedIn';
+import CreateEvent from '../components/pages/CreateEvent';
 import UserTable from '../components/pages/UserPage/UserTable';
 import UserPage from '../components/pages/UserPage/UserPage';
 import authorities from '../config/Authorities';
@@ -19,6 +21,8 @@ const Router = () => {
     <Routes>
       <Route path={'/'} element={<HomePage />} />
       <Route path={'/login'} element={<LoginPage />} />
+      <Route path={'/home'} element={<HomePageLoggedIn />} />
+      <Route path={'/create'} element={<CreateEvent />} />
 
       <Route
         path={'/users'}

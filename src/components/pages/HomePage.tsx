@@ -21,7 +21,7 @@ export default function HomePage() {
           }}
       >
         <h1 style={{ fontFamily: 'Arial, sans-serif', fontSize: '2.5rem', textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>
-          Welcome to the Homepage
+          Welcome to Ourspace
         </h1>
           <Box
               component="img"
