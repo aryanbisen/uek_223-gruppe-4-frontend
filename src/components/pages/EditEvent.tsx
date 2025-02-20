@@ -135,7 +135,7 @@ const CreateEvent: React.FC = () => {
                                             style={btnStyle}
                                             fullWidth
                                         >
-                                            Create Event
+                                            Edit Event
                                         </Button>
                                     </Grid>
                                 </Grid>

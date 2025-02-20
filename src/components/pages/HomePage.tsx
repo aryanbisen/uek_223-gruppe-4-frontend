@@ -14,9 +14,8 @@ export default function HomePage() {
           flexDirection="column"
           height="100vh"
           sx={{
-            background: 'linear-gradient(135deg, ' +
-                '#0f0fcf, #00d4ff)',
-            color: '#fff',
+              background: 'linear-gradient(135deg, #1a1a1a, #2e004f)',
+              color: '#fff',
             textAlign: 'center',
           }}
       >
@@ -39,8 +38,8 @@ export default function HomePage() {
               variant="contained"
               sx={{
                   mt: 3,
-                  backgroundColor: '#00d4ff',
-                  '&:hover': { backgroundColor: '#0f0fcf' },
+                  backgroundColor: '#CBC3E3',
+                  '&:hover': { backgroundColor: '#2e004f' },
               }}
               onClick={() => navigate('/login')}
           >
