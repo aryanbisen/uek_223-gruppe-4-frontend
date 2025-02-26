@@ -3,8 +3,8 @@ import LoginPage from '../components/pages/LoginPage/LoginPage';
 import PrivateRoute from './PrivateRoute';
 import HomePage from '../components/pages/HomePage';
 import HomePageLoggedIn from '../components/pages/HomePageLoggedIn';
-import CreateEvent from '../components/pages/CreateEvent';
-import EditEvent from '../components/pages/EditEvent';
+import CreateEventPage from '../components/pages/CreateEventPage';
+import EditEventPage from '../components/pages/EditEventPage';
 import UserTable from '../components/pages/UserPage/UserTable';
 import UserPage from '../components/pages/UserPage/UserPage';
 import authorities from '../config/Authorities';
@@ -23,8 +23,8 @@ const Router = () => {
       <Route path={'/'} element={<HomePage />} />
       <Route path={'/login'} element={<LoginPage />} />
       <Route path={'/home'} element={<HomePageLoggedIn />} />
-      <Route path={'/create-event'} element={<CreateEvent />} />
-      <Route path={'/edit-event'} element={<EditEvent />} />
+      <Route path={'/create-event'} element={<CreateEventPage />} />
+      <Route path={'/edit-event'} element={<EditEventPage />} />
 
       <Route
         path={'/users'}
