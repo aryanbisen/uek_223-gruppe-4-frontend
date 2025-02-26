@@ -6,7 +6,7 @@ export default function NavItems() {
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <NavItem label="Your Events" route="/events" />
-            <NavItem label="Create Event" route="/create" />
+            <NavItem label="Create Event" route="/create-event" />
         </Box>
     );
 }

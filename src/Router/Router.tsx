@@ -23,8 +23,8 @@ const Router = () => {
       <Route path={'/'} element={<HomePage />} />
       <Route path={'/login'} element={<LoginPage />} />
       <Route path={'/home'} element={<HomePageLoggedIn />} />
-      <Route path={'/create'} element={<CreateEvent />} />
-      <Route path={'/edit'} element={<EditEvent />} />
+      <Route path={'/create-event'} element={<CreateEvent />} />
+      <Route path={'/edit-event'} element={<EditEvent />} />
 
       <Route
         path={'/users'}
