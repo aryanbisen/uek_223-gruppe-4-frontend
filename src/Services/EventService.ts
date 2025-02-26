@@ -1,5 +1,6 @@
 import api from '../config/Api';
 import { Event } from '../types/models/Event.model';
+import { User } from "../types/models/User.model";
 
 const EventService = {
     getEvent: async (eventID: string): Promise<Event> => {
@@ -12,16 +13,17 @@ const EventService = {
         }
     },
 
-    updateEvent: async (event: Event) => {
+    updateEvent: async (event: Event) : Promise<Event> => {
         try {
-            return await api.put(`/event`, event);
+            const { data } = await api.put(`/event`, event);
+            return data;
         } catch (error) {
             console.error('Error updating event:', error);
             throw error;
         }
     },
 
-    addEvent: async (event: Event) => {
+    addEvent: async (event: Event): Promise<Event> => {
         try {
             const { data } = await api.post('/event', event);
             return data;
@@ -31,12 +33,22 @@ const EventService = {
         }
     },
 
-    getAllEvents: async (): Promise<Event[]> => {
+    getEvents: async (size: number, offset: number): Promise<Event[]> => {
         try {
-            const { data } = await api.get<Event[]>(`/event`);
+            const { data } = await api.get<Event[]>(`/event?size=${size}&offset=${offset}`);
             return data;
         } catch (error) {
             console.error('Error fetching all events:', error);
+            throw error;
+        }
+    },
+
+    getEventGuests: async (eventID: string, size: number, offset: number) : Promise<User[]> => {
+        try {
+            const { data } = await api.get<User[]>(`/event/${eventID}/guests?size=${size}&offset=${offset}`);
+            return data;
+        } catch (error) {
+            console.error('Error fetching all guests:', error);
             throw error;
         }
     },
