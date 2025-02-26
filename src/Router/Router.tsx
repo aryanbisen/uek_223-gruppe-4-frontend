@@ -24,7 +24,7 @@ const Router = () => {
       <Route path={'/login'} element={<LoginPage />} />
       <Route path={'/home'} element={<HomePageLoggedIn />} />
       <Route path={'/create-event'} element={<CreateEventPage />} />
-      <Route path={'/edit-event'} element={<EditEventPage />} />
+      <Route path={`/edit-event/:eventID`} element={<EditEventPage />} />
 
       <Route
         path={'/users'}

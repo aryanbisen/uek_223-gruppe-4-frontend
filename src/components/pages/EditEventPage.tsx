@@ -8,6 +8,8 @@ import {
 import React, { useState } from 'react';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
+import EventService from "../../Services/EventService";
+import {User} from "../../types/models/Event.model";
 
 const validationSchema = Yup.object().shape({
     eventName: Yup.string().required('Event name is required'),
@@ -24,10 +26,16 @@ const EditEventPage = () => {
     };
     const btnstyle = { marginTop: '16px' };
 
-    const handleSubmit = (values: { eventName: string; eventDate: string; location: string; guestList: string }) => {
+    const handleSubmit = (values: { id: string; eventName: string; date: string; location: string; guestList: User[] }) => {
+        EventService.updateEvent(values)
         console.log('Event Edited:', values);
         alert('Event Edited Successfully!');
     };
+    const url = window.location.pathname;
+    const urlSegments = url.split('/');
+    const eventID = urlSegments[urlSegments.length - 1];
+
+    const event = EventService.getEvent(eventID);
 
     return (
         <Grid
@@ -49,10 +57,11 @@ const EditEventPage = () => {
                     <Grid item>
                         <Formik
                             initialValues={{
+                                id: eventID,
                                 eventName: '',
-                                eventDate: '',
+                                date: '',
                                 location: '',
-                                guestList: '',
+                                guestList: [],
                             }}
                             enableReinitialize
                             validationSchema={validationSchema}
@@ -89,10 +98,10 @@ const EditEventPage = () => {
                                                 InputLabelProps={{ shrink: true }}
                                                 onChange={props.handleChange}
                                                 onBlur={props.handleBlur}
-                                                value={props.values.eventDate}
+                                                value={props.values.date}
                                             />
-                                            {props.errors.eventDate && (
-                                                <div id="feedback">{props.errors.eventDate}</div>
+                                            {props.errors.date && (
+                                                <div id="feedback">{props.errors.date}</div>
                                             )}
                                         </Grid>
                                         <Grid item>
