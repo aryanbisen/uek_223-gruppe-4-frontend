@@ -1,4 +1,4 @@
-export type Event = {
+export type EventWithName = {
     id: string;
     eventCreator: User;
     eventName: string;  // Matches backend field
@@ -7,4 +7,4 @@ export type Event = {
     guestList?: User[]; // Matches UserNameDTO structure
 };
 
-export type User = { firstName: string; id: string; lastName: string };
+export type User = { id: string; firstName: string; lastName: string };

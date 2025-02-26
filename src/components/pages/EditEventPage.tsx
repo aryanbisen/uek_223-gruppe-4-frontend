@@ -8,6 +8,8 @@ import {
 import React, { useState } from 'react';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
+import EventService from "../../Services/EventService";
+import {User} from "../../types/models/Event.model";
 
 const validationSchema = Yup.object().shape({
     eventName: Yup.string().required('Event name is required'),
@@ -24,10 +26,14 @@ const EditEventPage = () => {
     };
     const btnstyle = { marginTop: '16px' };
 
-    const handleSubmit = (values: { eventName: string; eventDate: string; location: string; guestList: string }) => {
+    const handleSubmit = (values: { id: string; eventName: string; date: string; location: string; guestList: User[] }) => {
+        EventService.updateEvent(values)
         console.log('Event Edited:', values);
         alert('Event Edited Successfully!');
     };
+    const url = window.location.pathname;
+    const urlSegments = url.split('/');
+    const eventID = urlSegments[urlSegments.length - 1];
 
     return (
         <Grid
@@ -49,10 +55,11 @@ const EditEventPage = () => {
                     <Grid item>
                         <Formik
                             initialValues={{
+                                id: eventID,
                                 eventName: '',
-                                eventDate: '',
+                                date: '',
                                 location: '',
-                                guestList: '',
+                                guestList: [],
                             }}
                             enableReinitialize
                             validationSchema={validationSchema}
@@ -86,15 +93,20 @@ const EditEventPage = () => {
                                                 type="date"
                                                 fullWidth
                                                 required
-                                                InputLabelProps={{ shrink: true }}
-                                                onChange={props.handleChange}
+                                                InputLabelProps={{
+                                                    shrink: true, // Ensures label stays above input
+                                                }}
+                                                onChange={(e) => props.setFieldValue("date", e.target.value)} // Set date value using setFieldValue
                                                 onBlur={props.handleBlur}
-                                                value={props.values.eventDate}
+                                                value={props.values.date || ''} // Ensure empty string if no date is selected
                                             />
-                                            {props.errors.eventDate && (
-                                                <div id="feedback">{props.errors.eventDate}</div>
+                                            {props.errors.date && (
+                                                <div id="feedback" style={{ color: 'red' }}>
+                                                    {props.errors.date}
+                                                </div>
                                             )}
                                         </Grid>
+
                                         <Grid item>
                                             <TextField
                                                 label="Location"
