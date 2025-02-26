@@ -5,11 +5,12 @@ import {
     Button,
     Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import EventService from "../../Services/EventService";
-import {User} from "../../types/models/EventWithName.model";
+import UserService from "../../Services/UserService";
+import { User } from "../../types/models/EventWithName.model";
 
 const validationSchema = Yup.object().shape({
     eventName: Yup.string().required('Event name is required'),
@@ -26,16 +27,48 @@ const CreateEventPage = () => {
     };
     const btnstyle = { marginTop: '16px' };
 
-    const handleSubmit = (values: { id: string; eventCreator: User; eventName: string; date: string; location: string; guestList: User[] }) => {
-        EventService.addEvent(values)
-        console.log('Event Edited:', values);
-        alert('Event Edited Successfully!');
-    };
-    const url = window.location.pathname;
-    const urlSegments = url.split('/');
-    const eventID = urlSegments[urlSegments.length - 1];
+    const [currentUser, setCurrentUser] = useState<User | null>(null);
 
-    const event = EventService.getEvent(eventID);
+    // Fetch current user on component mount
+    useEffect(() => {
+        const fetchUser = async () => {
+            const userID = localStorage.getItem("userID"); // Assuming the user ID is stored in local storage
+            if (userID) {
+                const user = await UserService.getUser(userID);
+                setCurrentUser(user);
+            }
+        };
+
+        fetchUser();
+    }, []);
+
+    const handleSubmit = async (values: { eventName: string; date: string; location: string; guestList: string }) => {
+        if (!currentUser) {
+            alert("User not found!");
+            return;
+        }
+
+        const newEvent = {
+            id: crypto.randomUUID(), // Generate a unique ID for the event
+            eventCreator: currentUser,
+            eventName: values.eventName,
+            date: values.date,
+            location: values.location,
+            guestList: values.guestList.split(",").map((name) => ({
+                firstName: name.trim(),
+                lastName: "",
+                id: crypto.randomUUID(), // Temporary guest IDs, ideally, these should be real user IDs
+            })),
+        };
+
+        try {
+            await EventService.addEvent(newEvent);
+            alert("Event Created Successfully!");
+        } catch (error) {
+            console.error("Error creating event:", error);
+            alert("Failed to create event.");
+        }
+    };
 
     return (
         <Grid
@@ -51,18 +84,18 @@ const CreateEventPage = () => {
                 <Grid container direction="column" spacing={2}>
                     <Grid item>
                         <Typography variant="h4" align="center">
-                            Edit Event
+                            Create Event
                         </Typography>
                     </Grid>
                     <Grid item>
                         <Formik
                             initialValues={{
-                                id: eventID,
-                                eventCreator: UserService.getUser(),
+                                id: '',
+                                eventCreator: currentUser || { id: '', firstName: '', lastName: '' }, // Default empty user while loading
                                 eventName: '',
                                 date: '',
                                 location: '',
-                                guestList: [],
+                                guestList: '',
                             }}
                             enableReinitialize
                             validationSchema={validationSchema}
@@ -96,15 +129,20 @@ const CreateEventPage = () => {
                                                 type="date"
                                                 fullWidth
                                                 required
-                                                InputLabelProps={{ shrink: true }}
-                                                onChange={props.handleChange}
+                                                InputLabelProps={{
+                                                    shrink: true, // Ensures label stays above input
+                                                }}
+                                                onChange={(e) => props.setFieldValue("date", e.target.value)} // Set date value using setFieldValue
                                                 onBlur={props.handleBlur}
-                                                value={props.values.date}
+                                                value={props.values.date || ''} // Ensure empty string if no date is selected
                                             />
                                             {props.errors.date && (
-                                                <div id="feedback">{props.errors.date}</div>
+                                                <div id="feedback" style={{ color: 'red' }}>
+                                                    {props.errors.date}
+                                                </div>
                                             )}
                                         </Grid>
+
                                         <Grid item>
                                             <TextField
                                                 label="Location"
@@ -122,7 +160,7 @@ const CreateEventPage = () => {
                                         </Grid>
                                         <Grid item>
                                             <TextField
-                                                label="Guest List"
+                                                label="Guest List (comma separated)"
                                                 id="guestList"
                                                 placeholder="Enter guest list"
                                                 fullWidth

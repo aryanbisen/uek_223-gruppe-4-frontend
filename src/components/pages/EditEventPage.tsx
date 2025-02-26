@@ -35,8 +35,6 @@ const EditEventPage = () => {
     const urlSegments = url.split('/');
     const eventID = urlSegments[urlSegments.length - 1];
 
-    const event = EventService.getEvent(eventID);
-
     return (
         <Grid
             container
@@ -95,15 +93,20 @@ const EditEventPage = () => {
                                                 type="date"
                                                 fullWidth
                                                 required
-                                                InputLabelProps={{ shrink: true }}
-                                                onChange={props.handleChange}
+                                                InputLabelProps={{
+                                                    shrink: true, // Ensures label stays above input
+                                                }}
+                                                onChange={(e) => props.setFieldValue("date", e.target.value)} // Set date value using setFieldValue
                                                 onBlur={props.handleBlur}
-                                                value={props.values.date}
+                                                value={props.values.date || ''} // Ensure empty string if no date is selected
                                             />
                                             {props.errors.date && (
-                                                <div id="feedback">{props.errors.date}</div>
+                                                <div id="feedback" style={{ color: 'red' }}>
+                                                    {props.errors.date}
+                                                </div>
                                             )}
                                         </Grid>
+
                                         <Grid item>
                                             <TextField
                                                 label="Location"
