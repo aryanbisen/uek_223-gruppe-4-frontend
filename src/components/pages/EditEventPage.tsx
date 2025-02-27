@@ -70,6 +70,21 @@ const EditEventPage = () => {
         redirectToError();
     }
 
+    const handleDelete = () => {
+        if (!eventID) {
+            redirectToError();
+            return;
+        }
+
+        EventService.deleteEvent(eventID)
+            .then(() => {
+                alert('Event Deleted Successfully!');
+                navigate('/events');
+            })
+            .catch(() => redirectToError());
+    };
+
+
     useEffect(() => {
         EventService.getEvent(eventID ?? "")
             .then(res => setOriginalEvent(res))
@@ -188,6 +203,15 @@ const EditEventPage = () => {
                                                 fullWidth
                                             >
                                                 Edit Event
+                                            </Button>
+                                            <Button
+                                                color="secondary"
+                                                variant="contained"
+                                                style={btnstyle}
+                                                fullWidth
+                                                onClick={handleDelete}
+                                            >
+                                                Delete Event
                                             </Button>
                                         </Grid>
                                     </Grid>

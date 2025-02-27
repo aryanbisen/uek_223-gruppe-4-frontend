@@ -5,16 +5,16 @@ import {
     Button,
     Typography,
 } from '@mui/material';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import EventService from "../../Services/EventService";
-import UserService from "../../Services/UserService";
-import { User } from "../../types/models/EventWithName.model";
+import { useNavigate } from "react-router-dom";
+import { User } from "../../types/models/Event.model";
 
 const validationSchema = Yup.object().shape({
     eventName: Yup.string().required('Event name is required'),
-    eventDate: Yup.string().required('Event date is required'),
+    date: Yup.string().required('Event date is required'),
     location: Yup.string().required('Location is required'),
     guestList: Yup.string().required('Guest list is required'),
 });
@@ -27,47 +27,35 @@ const CreateEventPage = () => {
     };
     const btnstyle = { marginTop: '16px' };
 
-    const [currentUser, setCurrentUser] = useState<User | null>(null);
+    const navigate = useNavigate();
 
-    // Fetch current user on component mount
-    useEffect(() => {
-        const fetchUser = async () => {
-            const userID = localStorage.getItem("userID"); // Assuming the user ID is stored in local storage
-            if (userID) {
-                const user = await UserService.getUser(userID);
-                setCurrentUser(user);
-            }
-        };
-
-        fetchUser();
-    }, []);
-
-    const handleSubmit = async (values: { eventName: string; date: string; location: string; guestList: string }) => {
-        if (!currentUser) {
-            alert("User not found!");
-            return;
-        }
-
+    const handleSubmit = (values: {
+        eventName: string;
+        date: string;
+        location: string;
+        guestList: string;
+    }) => {
         const newEvent = {
-            id: crypto.randomUUID(), // Generate a unique ID for the event
-            eventCreator: currentUser,
+            id: crypto.randomUUID(),
             eventName: values.eventName,
             date: values.date,
             location: values.location,
             guestList: values.guestList.split(",").map((name) => ({
                 firstName: name.trim(),
                 lastName: "",
-                id: crypto.randomUUID(), // Temporary guest IDs, ideally, these should be real user IDs
+                id: crypto.randomUUID(),
             })),
         };
 
-        try {
-            await EventService.addEvent(newEvent);
-            alert("Event Created Successfully!");
-        } catch (error) {
-            console.error("Error creating event:", error);
-            alert("Failed to create event.");
-        }
+        EventService.addEvent(newEvent)
+            .then(() => {
+                alert("Event Created Successfully!");
+                navigate("/events");
+            })
+            .catch((error) => {
+                console.error("Error creating event:", error);
+                alert("Failed to create event.");
+            });
     };
 
     return (
@@ -90,18 +78,15 @@ const CreateEventPage = () => {
                     <Grid item>
                         <Formik
                             initialValues={{
-                                id: '',
-                                eventCreator: currentUser || { id: '', firstName: '', lastName: '' }, // Default empty user while loading
                                 eventName: '',
                                 date: '',
                                 location: '',
                                 guestList: '',
                             }}
-                            enableReinitialize
                             validationSchema={validationSchema}
                             onSubmit={handleSubmit}
                             validateOnChange
-                            isInitialValid={false}
+                            enableReinitialize
                         >
                             {(props) => (
                                 <Form onSubmit={props.handleSubmit}>
@@ -124,17 +109,17 @@ const CreateEventPage = () => {
                                         </Grid>
                                         <Grid item>
                                             <TextField
-                                                id="eventDate"
+                                                id="date"
                                                 label="Event Date"
                                                 type="date"
                                                 fullWidth
                                                 required
                                                 InputLabelProps={{
-                                                    shrink: true, // Ensures label stays above input
+                                                    shrink: true,
                                                 }}
-                                                onChange={(e) => props.setFieldValue("date", e.target.value)} // Set date value using setFieldValue
+                                                onChange={props.handleChange}
                                                 onBlur={props.handleBlur}
-                                                value={props.values.date || ''} // Ensure empty string if no date is selected
+                                                value={props.values.date || ''}
                                             />
                                             {props.errors.date && (
                                                 <div id="feedback" style={{ color: 'red' }}>
@@ -142,7 +127,6 @@ const CreateEventPage = () => {
                                                 </div>
                                             )}
                                         </Grid>
-
                                         <Grid item>
                                             <TextField
                                                 label="Location"
