@@ -5,5 +5,5 @@ import { useNavigate } from 'react-router-dom';
 export default function UserIcon() {
     const navigate = useNavigate();
 
-    return <Avatar sx={{ cursor: 'pointer' }} onClick={() => navigate('/profile')} />;
+    return <Avatar sx={{ cursor: 'pointer' }} onClick={() => navigate('/admin')} />;
 }
