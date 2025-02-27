@@ -52,6 +52,7 @@ const PrivateRoute: React.FC<Props> = ({
    * Check if the active user has at least 1 of the needed authorities.
    * If no authorities are needed true is returned.
    */
+
   let hasNeededAuthorities =
     requiredAuths.length === 0 ||
     requiredAuths.some(AuthorityService.hasAuthority);

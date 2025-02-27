@@ -9,6 +9,7 @@ import UserTable from '../components/pages/UserPage/UserTable';
 import UserPage from '../components/pages/UserPage/UserPage';
 import AdminPage from '../components/pages/AdminPage';
 import authorities from '../config/Authorities';
+import EventDetailPage from "../components/pages/EventDetailPage";
 
 /**
  * Router component renders a route switch with all available pages
@@ -23,13 +24,26 @@ const Router = () => {
     <Routes>
       <Route path={'/'} element={<HomePage />} />
       <Route path={'/login'} element={<LoginPage />} />
-      <Route path={'/home'} element={<HomePageLoggedIn />} />
-      <Route path={'/create-event'} element={<CreateEventPage />} />
-      <Route path={`/edit-event/:eventID`} element={<EditEventPage />} />
 
-      <Route
+        <Route
+            path={'/home'}
+            element={<PrivateRoute requiredAuths={[authorities.EVENT_READ]} element={<HomePageLoggedIn />} />}
+        />
+        <Route
+            path={'/create-event'}
+            element={<PrivateRoute requiredAuths={[authorities.EVENT_CREATE]} element={<CreateEventPage />} />}
+        />
+        <Route
+            path={'/edit-event/:id'}
+            element={<PrivateRoute requiredAuths={[authorities.EVENT_MODIFY]} element={<EditEventPage />} />}
+        />
+        <Route
+            path={'/event/:id'}
+            element={<PrivateRoute requiredAuths={[authorities.EVENT_READ]} element={<EventDetailPage />} />}
+        />
+        <Route
         path={'/users'}
-        element={<PrivateRoute requiredAuths={[]} element={<UserTable />} />}
+        element={<PrivateRoute requiredAuths={[authorities.USER_READ]} element={<UserTable />} />}
       />
       <Route
         path='/useredit'
