@@ -5,7 +5,7 @@ import {
     Button,
     Typography,
 } from '@mui/material';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Form, Formik} from 'formik';
 import * as Yup from 'yup';
 import EventService from "../../Services/EventService";
@@ -15,7 +15,7 @@ import {Event} from "../../types/models/Event.model"
 
 const validationSchema = Yup.object().shape({
     eventName: Yup.string().required('Event name is required'),
-    eventDate: Yup.string().required('Event date is required'),
+    date: Yup.string().required('Event date is required'),
     location: Yup.string().required('Location is required'),
     guestList: Yup.string().required('Guest list is required'),
 });
@@ -64,13 +64,17 @@ const EditEventPage = () => {
     if (typeof eventID !== "string") {
         redirectToError();
     } else {
-        EventService.getEvent(eventID)
-            .then(res => setOriginalEvent(res))
-            .catch(reason => redirectToError());
+
     }
     if (!originalEvent) {
         redirectToError();
     }
+
+    useEffect(() => {
+        EventService.getEvent(eventID ?? "")
+            .then(res => setOriginalEvent(res))
+            .catch(reason => redirectToError());
+    },[])
 
     return (
         <Grid
