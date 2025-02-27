@@ -1,4 +1,4 @@
-import {Route, Routes} from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import LoginPage from '../components/pages/LoginPage/LoginPage';
 import PrivateRoute from './PrivateRoute';
 import HomePage from '../components/pages/HomePage';
@@ -19,14 +19,14 @@ const Router = () => {
 
     /** navigate to different "home"-locations depending on Role the user have */
 
-    return (
-        <Routes>
-            <Route path={'/'} element={<HomePage/>}/>
-            <Route path={'/login'} element={<LoginPage/>}/>
-            <Route path={'/home'} element={<HomePageLoggedIn/>}/>
-            <Route path={'/create-event'} element={<CreateEventPage/>}/>
-            <Route path={'/edit-event'} element={<EditEventPage/>}/>
-            <Route path={'/events'} element={<MyEventsPage/>}/>
+  return (
+    <Routes>
+      <Route path={'/'} element={<HomePage />} />
+      <Route path={'/login'} element={<LoginPage />} />
+      <Route path={'/home'} element={<HomePageLoggedIn />} />
+      <Route path={'/create-event'} element={<CreateEventPage />} />
+      <Route path={`/edit-event/:eventID`} element={<EditEventPage />} />
+        <Route path={'/events'} element={<MyEventsPage/>}/>
 
             <Route
                 path={'/users'}
