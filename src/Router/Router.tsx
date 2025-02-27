@@ -24,38 +24,38 @@ const Router = () => {
 
     return (
         <Routes>
-            <Route path={'/'} element={<HomePage/>}/>
-            <Route path={'/login'} element={<LoginPage/>}/>
+            <Route path={'/'} element={<HomePage />} />
+            <Route path={'/login'} element={<LoginPage />} />
             <Route
                 path={'/home'}
-                element={<PrivateRoute requiredAuths={[authorities.EVENT_READ]} element={<HomePageLoggedIn/>}/>}
+                element={<PrivateRoute requiredAuths={[authorities.EVENT_READ]} element={<HomePageLoggedIn />} />}
             />
             <Route
                 path={'/create-event'}
-                element={<PrivateRoute requiredAuths={[authorities.EVENT_CREATE]} element={<CreateEventPage/>}/>}
+                element={<PrivateRoute requiredAuths={[authorities.EVENT_CREATE]} element={<CreateEventPage />} />}
             />
             <Route
-                path={'/edit-event/:id'}
-                element={<PrivateRoute requiredAuths={[authorities.EVENT_MODIFY]} element={<EditEventPage/>}/>}
+                path={'/edit-event/:eventID'}
+                element={<PrivateRoute requiredAuths={[authorities.EVENT_MODIFY]} element={<EditEventPage />} />}
             />
             <Route
                 path={'/event/:id'}
-                element={<PrivateRoute requiredAuths={[authorities.EVENT_READ]} element={<EventDetailPage/>}/>}
-            />
-            <Route
-                path={'/users'}
-                element={<PrivateRoute requiredAuths={[authorities.USER_READ]} element={<UserTable/>}/>}
+                element={<PrivateRoute requiredAuths={[authorities.EVENT_READ]} element={<EventDetailPage />} />}
             />
             <Route
                 path={'/events'}
-                element={<PrivateRoute requiredAuths={[authorities.EVENT_READ]} element={<MyEventsPage/>}/>}
+                element={<PrivateRoute requiredAuths={[authorities.EVENT_READ]} element={<MyEventsPage />} />}
+            />
+            <Route
+                path={'/users'}
+                element={<PrivateRoute requiredAuths={[authorities.USER_READ]} element={<UserTable />} />}
             />
             <Route
                 path='/useredit'
                 element={
                     <PrivateRoute
                         requiredAuths={[authorities.USER_DEACTIVATE, authorities.USER_CREATE]}
-                        element={<UserPage/>}
+                        element={<UserPage />}
                     ></PrivateRoute>
                 }
             />
@@ -64,7 +64,7 @@ const Router = () => {
                 element={
                     <PrivateRoute
                         requiredAuths={[authorities.USER_READ]}
-                        element={<UserPage/>}
+                        element={<UserPage />}
                     ></PrivateRoute>
                 }
             />
@@ -72,7 +72,7 @@ const Router = () => {
             <Route path='/error' element={<ErrorPage/>}/>
             <Route
                 path={'/admin'}
-                element={<PrivateRoute requiredAuths={[]} element={<AdminPage/>}/>}
+                element={<PrivateRoute requiredAuths={[]} element={<AdminPage />} />}
             />
         </Routes>
     );
