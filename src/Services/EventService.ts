@@ -15,7 +15,7 @@ const EventService = {
 
     updateEvent: async (event: Event) : Promise<Event> => {
         try {
-            const { data } = await api.put(`/event`, event);
+            const { data } = await api.put(`/event/${event.id}`, event);
             return data;
         } catch (error) {
             console.error('Error updating event:', error);

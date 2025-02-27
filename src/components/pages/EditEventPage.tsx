@@ -44,7 +44,7 @@ const EditEventPage = () => {
         eventName: string;
         date: string;
         location: string;
-        guestList: User[]
+        guestList: User[];
     }) => {
         EventService.updateEvent(values)
         console.log('Event Edited:', values);
