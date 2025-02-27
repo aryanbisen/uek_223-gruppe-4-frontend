@@ -5,11 +5,13 @@ import {
     Button,
     Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
-import { Form, Formik } from 'formik';
+import React from 'react';
+import {Form, Formik} from 'formik';
 import * as Yup from 'yup';
 import EventService from "../../Services/EventService";
 import {User} from "../../types/models/Event.model";
+import {useNavigate, useParams} from "react-router-dom";
+import {Event} from "../../types/models/Event.model"
 
 const validationSchema = Yup.object().shape({
     eventName: Yup.string().required('Event name is required'),
@@ -19,21 +21,56 @@ const validationSchema = Yup.object().shape({
 });
 
 const EditEventPage = () => {
+    // styling
+
     const paperStyle = {
         padding: 20,
         height: '70vh',
         width: 320,
     };
-    const btnstyle = { marginTop: '16px' };
+    const btnstyle = {marginTop: '16px'};
 
-    const handleSubmit = (values: { id: string; eventName: string; date: string; location: string; guestList: User[] }) => {
+    // navigation
+
+    const navigate = useNavigate();
+    const redirectToError = () => {
+        navigate('/error');
+    };
+
+    // submit form
+
+    const handleSubmit = (values: {
+        id: string;
+        eventName: string;
+        date: string;
+        location: string;
+        guestList: User[]
+    }) => {
         EventService.updateEvent(values)
         console.log('Event Edited:', values);
         alert('Event Edited Successfully!');
     };
-    const url = window.location.pathname;
-    const urlSegments = url.split('/');
-    const eventID = urlSegments[urlSegments.length - 1];
+
+    // get original event data
+
+    const [originalEvent, setOriginalEvent] = React.useState<Event>({
+        id: '',
+        eventName: '',
+        date: '',
+        location: '',
+        guestList: [],
+    });
+    let eventID = useParams().eventID;
+    if (typeof eventID !== "string") {
+        redirectToError();
+    } else {
+        EventService.getEvent(eventID)
+            .then(res => setOriginalEvent(res))
+            .catch(reason => redirectToError());
+    }
+    if (!originalEvent) {
+        redirectToError();
+    }
 
     return (
         <Grid
@@ -55,11 +92,11 @@ const EditEventPage = () => {
                     <Grid item>
                         <Formik
                             initialValues={{
-                                id: eventID,
-                                eventName: '',
-                                date: '',
-                                location: '',
-                                guestList: [],
+                                id: originalEvent?.id || '',
+                                eventName: originalEvent?.eventName || '',
+                                date: originalEvent?.date || '',
+                                location: originalEvent?.location || '',
+                                guestList: originalEvent?.guestList || [],
                             }}
                             enableReinitialize
                             validationSchema={validationSchema}
@@ -96,12 +133,13 @@ const EditEventPage = () => {
                                                 InputLabelProps={{
                                                     shrink: true, // Ensures label stays above input
                                                 }}
-                                                onChange={(e) => props.setFieldValue("date", e.target.value)} // Set date value using setFieldValue
+                                                onChange={(e) =>
+                                                    props.setFieldValue("date", e.target.value)} // Set date value using setFieldValue
                                                 onBlur={props.handleBlur}
                                                 value={props.values.date || ''} // Ensure empty string if no date is selected
                                             />
                                             {props.errors.date && (
-                                                <div id="feedback" style={{ color: 'red' }}>
+                                                <div id="feedback" style={{color: 'red'}}>
                                                     {props.errors.date}
                                                 </div>
                                             )}
@@ -133,7 +171,7 @@ const EditEventPage = () => {
                                                 onBlur={props.handleBlur}
                                                 value={props.values.guestList}
                                             />
-                                            {props.errors.guestList && (
+                                            {props.errors.guestList && typeof props.errors.guestList === 'string' && (
                                                 <div id="feedback">{props.errors.guestList}</div>
                                             )}
                                         </Grid>

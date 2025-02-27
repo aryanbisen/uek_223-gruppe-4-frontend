@@ -6,4 +6,8 @@ export type Event = {
     guestList?: User[]; // Matches UserNameDTO structure
 };
 
-export type User = { id: string; firstName: string; lastName: string };
+export type User = {
+    id: string;
+    firstName: string;
+    lastName: string
+};

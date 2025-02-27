@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import LoginPage from '../components/pages/LoginPage/LoginPage';
 import PrivateRoute from './PrivateRoute';
 import HomePage from '../components/pages/HomePage';
@@ -10,6 +10,7 @@ import UserPage from '../components/pages/UserPage/UserPage';
 import AdminPage from '../components/pages/AdminPage';
 import authorities from '../config/Authorities';
 import MyEventsPage from "../components/pages/MyEventsPage";
+import ErrorPage from "../components/pages/ErrorPage";
 import EventDetailPage from "../components/pages/EventDetailPage";
 
 /**
@@ -63,7 +64,8 @@ const Router = () => {
           ></PrivateRoute>
         }
       />
-      <Route path='*' element={<div>Not Found</div>} />
+      <Route path='*' element={<ErrorPage/>}/>
+      <Route path='/error' element={<ErrorPage/>}/>
         <Route
             path={'/admin'}
             element={<PrivateRoute requiredAuths={[]} element={<AdminPage />} />}
