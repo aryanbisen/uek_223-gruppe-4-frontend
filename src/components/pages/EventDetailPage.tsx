@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Typography, CircularProgress } from '@mui/material';
+import { Box, Typography, CircularProgress, Button } from '@mui/material';
 import EventService from '../../Services/EventService';
+import { useNavigate } from "react-router-dom";
 
 export default function EventDetailPage() {
     const { id } = useParams<{ id: string }>(); // Get event ID from URL
     const [event, setEvent] = useState<{ eventName: string; date?: string; location?: string } | null>(null);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchEvent = async () => {
@@ -38,6 +40,14 @@ export default function EventDetailPage() {
             <Typography variant="h3">{event.eventName}</Typography>
             {event.date && <Typography variant="h5">📅 Date: {event.date}</Typography>}
             {event.location && <Typography variant="h5">📍 Location: {event.location}</Typography>}
+            <Button
+                variant="contained"
+                color="primary"
+                sx={{ mt: 2 }}
+                onClick={() => navigate('/edit-event/$id')}
+            >
+                ✏️ Edit
+            </Button>
         </Box>
     );
 }
