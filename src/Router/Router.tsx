@@ -22,60 +22,60 @@ const Router = () => {
 
     /** navigate to different "home"-locations depending on Role the user have */
 
-  return (
-    <Routes>
-      <Route path={'/'} element={<HomePage />} />
-      <Route path={'/login'} element={<LoginPage />} />
-        <Route
-            path={'/home'}
-            element={<PrivateRoute requiredAuths={[authorities.EVENT_READ]} element={<HomePageLoggedIn />} />}
-        />
-        <Route
-            path={'/create-event'}
-            element={<PrivateRoute requiredAuths={[authorities.EVENT_CREATE]} element={<CreateEventPage />} />}
-        />
-        <Route
-            path={'/edit-event/:eventID'}
-            element={<PrivateRoute requiredAuths={[authorities.EVENT_MODIFY]} element={<EditEventPage />} />}
-        />
-        <Route
-            path={'/event/:id'}
-            element={<PrivateRoute requiredAuths={[authorities.EVENT_READ]} element={<EventDetailPage />} />}
-        />
-        <Route
-            path={'/events'}
-            element={<PrivateRoute requiredAuths={[authorities.EVENT_READ]} element={<MyEventsPage />} />}
-        />
-        <Route
-        path={'/users'}
-        element={<PrivateRoute requiredAuths={[authorities.USER_READ]} element={<UserTable />} />}
-      />
-      <Route
-        path='/useredit'
-        element={
-          <PrivateRoute
-            requiredAuths={[authorities.USER_DEACTIVATE, authorities.USER_CREATE]}
-            element={<UserPage />}
-          ></PrivateRoute>
-        }
-      />
-      <Route
-        path='/useredit/:userId'
-        element={
-          <PrivateRoute
-            requiredAuths={[authorities.USER_READ]}
-            element={<UserPage />}
-          ></PrivateRoute>
-        }
-      />
-      <Route path='*' element={<ErrorPage/>}/>
-      <Route path='/error' element={<ErrorPage/>}/>
-        <Route
-            path={'/admin'}
-            element={<PrivateRoute requiredAuths={[]} element={<AdminPage />} />}
-        />
-    </Routes>
-  );
+    return (
+        <Routes>
+            <Route path={'/'} element={<HomePage />} />
+            <Route path={'/login'} element={<LoginPage />} />
+            <Route
+                path={'/home'}
+                element={<PrivateRoute requiredAuths={[authorities.EVENT_READ]} element={<HomePageLoggedIn />} />}
+            />
+            <Route
+                path={'/create-event'}
+                element={<PrivateRoute requiredAuths={[authorities.EVENT_CREATE]} element={<CreateEventPage />} />}
+            />
+            <Route
+                path={'/edit-event/:eventID'}
+                element={<PrivateRoute requiredAuths={[authorities.EVENT_MODIFY]} element={<EditEventPage />} />}
+            />
+            <Route
+                path={'/event/:id'}
+                element={<PrivateRoute requiredAuths={[authorities.EVENT_READ]} element={<EventDetailPage />} />}
+            />
+            <Route
+                path={'/events'}
+                element={<PrivateRoute requiredAuths={[authorities.EVENT_READ]} element={<MyEventsPage />} />}
+            />
+            <Route
+                path={'/users'}
+                element={<PrivateRoute requiredAuths={[authorities.USER_READ]} element={<UserTable />} />}
+            />
+            <Route
+                path='/useredit'
+                element={
+                    <PrivateRoute
+                        requiredAuths={[authorities.USER_DEACTIVATE, authorities.USER_CREATE]}
+                        element={<UserPage />}
+                    ></PrivateRoute>
+                }
+            />
+            <Route
+                path='/useredit/:userId'
+                element={
+                    <PrivateRoute
+                        requiredAuths={[authorities.USER_READ]}
+                        element={<UserPage />}
+                    ></PrivateRoute>
+                }
+            />
+            <Route path='*' element={<ErrorPage/>}/>
+            <Route path='/error' element={<ErrorPage/>}/>
+            <Route
+                path={'/admin'}
+                element={<PrivateRoute requiredAuths={[]} element={<AdminPage />} />}
+            />
+        </Routes>
+    );
 };
 
 export default Router;

@@ -24,7 +24,7 @@ const MyEventsPage = () => {
         event: React.MouseEvent<HTMLButtonElement> | null,
         newPage: number,
     ) => {
-        EventService.getEvents(rowsPerPage, page)
+        EventService.getEvents(rowsPerPage, page) //TODO: replace with getMyEvents and add user ID
             .then(result => console.debug(result))
             .catch(reason => alert(reason));
         setPage(newPage);
@@ -36,7 +36,7 @@ const MyEventsPage = () => {
         setPage(0);
     };
     const fetchEvents = () => {
-        EventService.getEvents(rowsPerPage, page)
+        EventService.getEvents(rowsPerPage, page) //TODO: replace with getMyEvents and add user ID
             .then((result) => setEvents(result))
             .catch((error) => alert(error));
     };
