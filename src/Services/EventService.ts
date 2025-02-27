@@ -43,6 +43,16 @@ const EventService = {
         }
     },
 
+    getMyEvents: async (userID: string, size: number, offset: number): Promise<Event[]> => {
+        try {
+            const { data } = await api.get<Event[]>(`/event/creator/${userID}?size=${size}&offset=${offset}`);
+            return data;
+        } catch (error) {
+            console.error('Error fetching all events:', error);
+            throw error;
+        }
+    },
+
     getEventGuests: async (eventID: string, size: number, offset: number) : Promise<User[]> => {
         try {
             const { data } = await api.get<User[]>(`/event/${eventID}/guests?size=${size}&offset=${offset}`);
