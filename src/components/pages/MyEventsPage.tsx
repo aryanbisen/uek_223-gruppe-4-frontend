@@ -48,7 +48,7 @@ const MyEventsPage = () => {
     const navigate = useNavigate();
     const handleButtonClick = (event: React.MouseEvent<HTMLDivElement>) => {
         const eventId = event.currentTarget.id; // ID des geklickten Elements abrufen
-        navigate('/edit-event/' + eventId);
+        navigate('/event/' + eventId);
     };
 
     return (

@@ -44,7 +44,7 @@ export default function EventDetailPage() {
                 variant="contained"
                 color="primary"
                 sx={{ mt: 2 }}
-                onClick={() => navigate('/edit-event/$id')}
+                onClick={() => navigate(`/edit-event/${id}`)}
             >
                 ✏️ Edit
             </Button>
