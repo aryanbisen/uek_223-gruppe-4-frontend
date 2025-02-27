@@ -72,7 +72,7 @@ const Router = () => {
             <Route path='/error' element={<ErrorPage/>}/>
             <Route
                 path={'/admin'}
-                element={<PrivateRoute requiredAuths={[]} element={<AdminPage />} />}
+                element={<PrivateRoute requiredAuths={[authorities.USER_MODIFY]} element={<AdminPage />} />}
             />
         </Routes>
     );

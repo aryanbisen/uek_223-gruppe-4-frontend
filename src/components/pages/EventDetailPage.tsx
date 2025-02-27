@@ -3,10 +3,11 @@ import { useParams } from 'react-router-dom';
 import { Box, Typography, CircularProgress, Button } from '@mui/material';
 import EventService from '../../Services/EventService';
 import { useNavigate } from "react-router-dom";
+import { Event } from "../../types/models/Event.model"
 
 export default function EventDetailPage() {
     const { id } = useParams<{ id: string }>(); // Get event ID from URL
-    const [event, setEvent] = useState<{ eventName: string; date?: string; location?: string } | null>(null);
+    const [event, setEvent] = useState<Event>();
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
@@ -14,8 +15,7 @@ export default function EventDetailPage() {
         const fetchEvent = async () => {
             try {
                 if (id) {
-                    const eventData = await EventService.getEvent(id);
-                    setEvent(eventData);
+                    await EventService.getEvent(id).then(response => setEvent(response));
                 }
             } catch (error) {
                 console.error('Error fetching event details:', error);

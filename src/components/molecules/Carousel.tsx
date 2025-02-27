@@ -3,17 +3,17 @@ import { Box, IconButton, Typography } from '@mui/material';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom'; // Import navigation hook
 import EventService from "../../Services/EventService";
+import { Event } from "../../types/models/Event.model"
 
 export default function Carousel() {
-    const [events, setEvents] = useState<{ id: string; eventName: string }[]>([]);
+    const [events, setEvents] = useState<Event[]>([]);
     const [index, setIndex] = useState(0);
     const navigate = useNavigate(); // Initialize navigation
 
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const response = await EventService.getEvents(10, 0); // Fetch first 10 events
-                setEvents(response);
+                await EventService.getEvents(10, 0).then(response => setEvents(response))
             } catch (error) {
                 console.error('Error fetching events:', error);
             }
