@@ -35,12 +35,16 @@ const Router = () => {
             element={<PrivateRoute requiredAuths={[authorities.EVENT_CREATE]} element={<CreateEventPage />} />}
         />
         <Route
-            path={'/edit-event/:id'}
+            path={'/edit-event/:eventID'}
             element={<PrivateRoute requiredAuths={[authorities.EVENT_MODIFY]} element={<EditEventPage />} />}
         />
         <Route
             path={'/event/:id'}
             element={<PrivateRoute requiredAuths={[authorities.EVENT_READ]} element={<EventDetailPage />} />}
+        />
+        <Route
+            path={'/events'}
+            element={<PrivateRoute requiredAuths={[authorities.EVENT_READ]} element={<MyEventsPage />} />}
         />
         <Route
         path={'/users'}
