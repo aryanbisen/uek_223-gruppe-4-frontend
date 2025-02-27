@@ -9,6 +9,7 @@ import UserTable from '../components/pages/UserPage/UserTable';
 import UserPage from '../components/pages/UserPage/UserPage';
 import AdminPage from '../components/pages/AdminPage';
 import authorities from '../config/Authorities';
+import MyEventsPage from "../components/pages/MyEventsPage";
 import EventDetailPage from "../components/pages/EventDetailPage";
 
 /**
@@ -16,15 +17,14 @@ import EventDetailPage from "../components/pages/EventDetailPage";
  */
 
 const Router = () => {
-  //const { checkRole } = useContext(ActiveUserContext);
+    //const { checkRole } = useContext(ActiveUserContext);
 
-  /** navigate to different "home"-locations depending on Role the user have */
+    /** navigate to different "home"-locations depending on Role the user have */
 
   return (
     <Routes>
       <Route path={'/'} element={<HomePage />} />
       <Route path={'/login'} element={<LoginPage />} />
-
         <Route
             path={'/home'}
             element={<PrivateRoute requiredAuths={[authorities.EVENT_READ]} element={<HomePageLoggedIn />} />}
@@ -63,7 +63,6 @@ const Router = () => {
           ></PrivateRoute>
         }
       />
-
       <Route path='*' element={<div>Not Found</div>} />
         <Route
             path={'/admin'}
