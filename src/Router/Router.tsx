@@ -7,6 +7,7 @@ import CreateEventPage from '../components/pages/CreateEventPage';
 import EditEventPage from '../components/pages/EditEventPage';
 import UserTable from '../components/pages/UserPage/UserTable';
 import UserPage from '../components/pages/UserPage/UserPage';
+import AdminPage from '../components/pages/AdminPage';
 import authorities from '../config/Authorities';
 
 /**
@@ -50,6 +51,10 @@ const Router = () => {
       />
 
       <Route path='*' element={<div>Not Found</div>} />
+        <Route
+            path={'/admin'}
+            element={<PrivateRoute requiredAuths={[]} element={<AdminPage />} />}
+        />
     </Routes>
   );
 };
